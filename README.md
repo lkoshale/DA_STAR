@@ -25,19 +25,18 @@ To use this library ensure you meet the following requirements:
 
 * [gcc and g++](https://gcc.gnu.org/)  with std c++11
 
-* [CUDA] (https://developer.nvidia.com/cuda-toolkit) >= 10.0
+* [CUDA](https://developer.nvidia.com/cuda-toolkit) >= 10.0
 
 ## How to Build
 This library is self-contained in the header files at the [include](https://github.com/lkoshale/DA_STAR/tree/master/include) directory of this repository with all required classes and functions defined.
 
 - You can copy the headers of this library to your projects include directory :
-
- ```cp -r DA_STAR/include/   <your-project>/include/```
+    - ```bash cp -r DA_STAR/include/   <your-project>/include/```
 
 - Or You can copy the headers of this library to your root/CUDA include folder
 
- ```sudo cp -r DA_STAR/include/   /usr/include/```
- ```cp -r DA_STAR/include/     <CUDA_PATH>/include/```
+    - ```sudo cp -r DA_STAR/include/   /usr/include/```
+    - ```cp -r DA_STAR/include/     <CUDA_PATH>/include/```
 
 ## Examples
 
