@@ -1,7 +1,8 @@
 # DA_STAR
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![forthebadge](https://forthebadge.com/images/badges/made-with-c-plus-plus.svg)](https://forthebadge.com)
+[![build:passing](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/lkoshale/DDP)
+<!-- [![forthebadge](https://forthebadge.com/images/badges/made-with-c-plus-plus.svg)](https://forthebadge.com) -->
 
 This repository contains the generic implementation of the A*(star) algorithm for dynamic graphs.
 
