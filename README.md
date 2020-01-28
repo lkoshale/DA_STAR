@@ -39,6 +39,41 @@ This library is self-contained in the header files at the [include](https://gith
     - ```cp -r DA_STAR/include/     <CUDA_PATH>/include/```
 
 ## Examples
+```c
+#include "include/dynamic_graph.cuh"
+#include "include/d_a_star.cuh"
+#include "include/utils.cuh"
+
+int main(){
+
+    std::string input_graph = "graph.txt";
+    std::string input_updates = "updates.txt";
+    
+    //reuires weight type
+    GPU_Dynamic_Graph<unsigned int> graph;
+
+    graph.read(input_graph);
+
+    int start_node = 0;             //start node
+    int end_node = 7;               //end node
+    int num_pq = 10;                //number of parallel priority queue
+    
+    //requires weight type and heuristics/Cost type
+    GPU_D_A_Star<unsigned int, int> algo(&graph,start_node,end_node,num_pq);
+
+    graph.set_update_file(input_update);
+
+    while(graph.update()){
+
+        std::vector<int> path = algo.get_path();
+        print_path(path);
+        
+    }
+
+    return 0;
+}
+
+```
 
 
 ## Dynamic Graphs
