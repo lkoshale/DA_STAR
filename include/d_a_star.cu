@@ -87,7 +87,7 @@ GPU_D_A_Star<T,U>:: GPU_D_A_Star(GPU_Dynamic_Graph<T> *graph, unsigned int start
 }
 
 template <class T,class U>
-void GPU_D_A_Star<T,U>:: set_huiristics(U* hx)
+void GPU_D_A_Star<T,U>:: set_heuristics(U* hx)
 {
     this->Hx = hx;
     is_set_hx = true;

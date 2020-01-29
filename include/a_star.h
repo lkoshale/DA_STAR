@@ -33,7 +33,7 @@ class A_Star
     public:
         A_Star(Dynamic_Graph<T> *graph, unsigned int start,unsigned int end, unsigned int K );
 
-        void set_huiristics(U* hx);
+        void set_heuristics(U* hx);
 
 
         void insert_pq(int node);
@@ -83,7 +83,7 @@ A_Star< T, U> :: A_Star(Dynamic_Graph<T> *graph, unsigned int start_node,unsigne
 }
 
 template <class T, class U >
-void A_Star< T, U> :: set_huiristics(U* hx)
+void A_Star< T, U> :: set_heuristics(U* hx)
 {
     this->Hx = hx;
     is_set_hx = true;

@@ -51,7 +51,7 @@ int main(){
 
     A_Star <unsigned int,int>* algo = new A_Star<unsigned int,int>(&dgraph,start,end,1);
 
-    algo->set_huiristics(hx);
+    algo->set_heuristics(hx);
 
     std::vector<int> path = algo->get_path();
 
@@ -67,7 +67,7 @@ int main(){
         printf("allocated\n");
         GPU_Dynamic_Graph<unsigned int> dg(&g);
         GPU_A_Star < unsigned int, int > g_algo(&dg,start,end,1);
-        g_algo.set_huiristics(hx);
+        g_algo.set_heuristics(hx);
         
         path = g_algo.get_path();
         

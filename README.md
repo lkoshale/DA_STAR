@@ -1,14 +1,14 @@
 # DA_STAR
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![build:passing](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/lkoshale/DDP)
+[![build:passing](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/lkoshale/DDP/tree/master/LIB)
 <!-- [![forthebadge](https://forthebadge.com/images/badges/made-with-c-plus-plus.svg)](https://forthebadge.com) -->
 
 This repository contains the generic implementation of the A*(star) algorithm for dynamic graphs.
 
 ## About
 A\* is one of the widely used path planning and shortest path approximation algorithms. It is applied in a diverse set of problems from path-finding in video games and robotics to codon optimization in genetics. In this work, we focus on A\* for graphs that are subjected to update operation, where an update operation refers to the insertion or
-deletion of an edge. Instead of performing A\* again from start each time graph is subject to update, our algorithm process the sub-graphs which are affected by the update. For temporal graph available at [SNAP](http://snap.stanford.edu/data.)
+deletion of an edge. Instead of performing A\* again from start each time graph is subject to update, our algorithm process the sub-graphs which are affected by the update. For temporal graph available at [SNAP](http://snap.stanford.edu/data)
 for 100 updates we got 25x-40x of performance improvement over repeated A* search. [More details](#dynamic-graphs)
 
 

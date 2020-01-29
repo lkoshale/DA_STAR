@@ -42,7 +42,7 @@ class GPU_A_Star
     public:
         GPU_A_Star(GPU_Dynamic_Graph<T> *graph, unsigned int start,unsigned int end, unsigned int K );
 
-        void set_huiristics(U* hx);
+        void set_heuristics(U* hx);
 
         std::vector<int> get_path();
 
