@@ -1,6 +1,5 @@
 #if clock skew detected
 #find . -exec touch {} \;
-# Makefile for Writing Make Files Example
 
 # *****************************************************
 # Variables to control Makefile operation
