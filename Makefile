@@ -1,13 +1,25 @@
 #if clock skew detected
 #find . -exec touch {} \;
+# Makefile for Writing Make Files Example
 
-all : cpu gpu
+# *****************************************************
+# Variables to control Makefile operation
 
-gpu : main.cpp
-	nvcc -x cu main.cpp -o gm -std=c++11
+NVCC = nvcc
+NVCCFLAGS = -x cu 
+CXX = g++
+CXXFLAGS = -Wall 
+
+# ****************************************************
+# Targets needed to bring the executable up to date
+
+all: gpu cpu
+
+gpu: main.cpp
+	$(NVCC) $(NVCCFLAGS) main.cpp -o gpu -std=c++11
 
 cpu: main.cpp
-	g++ -o m main.cpp -std=c++11
-
-clean: gm m 
-	rm -f gm m
+	$(CXX) $(CXXFLAGS) main.cpp -o cpu -std=c++11
+	
+clean: gpu cpu
+	rm -f gpu cpu
