@@ -1,14 +1,15 @@
 #ifdef __NVCC__
 
 template <class U>
-__global__ void extractMin(int* PQ_size, int* expandNodes,int* expandNodes_size,U* Cx,int* openList,int N,int K);
+__global__ void extractMin(unsigned int* PQ, unsigned int* PQ_size, int* expandNodes,int* expandNodes_size,U* Cx,int* openList,int N,int K);
 
 
 template <class T,class U>
 __global__ void A_star_expand(int* off,int* edge,unsigned T* W,U* Hx,int* parent,volatile U* Cx,
-    int* expandNodes,int* expandNodes_size, int* lock ,int* flagfound,int* openList,
-    int N,int E, int K,int dest,int* nVFlag,int* PQ_size,
-    int flagDiff,int* diff_off,int* diff_edge,unsigned int* diff_weight,int dE );
+    int* expandNodes,int* expandNodes_size, int* lock ,int* flagfound,int* openList,int* nVFlag,
+    int N,int E, int K,int dest,
+    int flagDiff,int dE,
+    int* diff_off,int* diff_edge,unsigned int* diff_weight );
 
 
 template <class U>
@@ -81,6 +82,8 @@ GPU_D_A_Star<T,U>:: GPU_D_A_Star(GPU_Dynamic_Graph<T> *graph, unsigned int start
     this->next_vertices_size = 0;
 
     this->num_updated_paths = 0;
+
+    this->num_threads = 512;
 
     __alloc_cpu();
 
@@ -168,16 +171,56 @@ void GPU_D_A_Star<T,U>:: __alloc_gpu()
     gpuErrchk ( cudaMemset(d_expand_nodes_size,0,sizeof(int)) );
     gpuErrchk ( cudaMemset(d_lock,0,sizeof(int)*N) );
 
+    //copy from cpu to gpu
+    gpuErrchk ( cudaMemcpy(d_Cx,Cx,sizeof(U)*N,cudaMemcpyHostToDevice) );
 
-    // gpuErrchk ( cudaMemcpy(d_Cx,Cx,sizeof(U)*N,cudaMemcpyHostToDevice) );
+    gpuErrchk ( cudaMemcpy(d_PQ_size,PQ_size,sizeof(unsigned int)*num_pq,cudaMemcpyHostToDevice) );
 
-    // gpuErrchk ( cudaMemcpy(d_PQ_size,PQ_size,sizeof(unsigned int)*num_pq,cudaMemcpyHostToDevice) );
+    gpuErrchk ( cudaMemcpy(d_parent,parent,sizeof(int)*N,cudaMemcpyHostToDevice) );
+    gpuErrchk ( cudaMemcpy(d_open_list,open_list,sizeof(int)*N,cudaMemcpyHostToDevice) );
 
-    // gpuErrchk ( cudaMemcpy(d_parent,parent,sizeof(int)*N,cudaMemcpyHostToDevice) );
-    // gpuErrchk ( cudaMemcpy(d_open_list,open_list,sizeof(int)*N,cudaMemcpyHostToDevice) );
+    gpuErrchk ( cudaMemcpy(d_flag_end,&flag_end,sizeof(int),cudaMemcpyHostToDevice) );
+    gpuErrchk ( cudaMemcpy(d_flag_found,&flag_found,sizeof(int),cudaMemcpyHostToDevice) );
+   
+    gpuErrchk ( cudaMemcpy(d_next_vertices_flag,next_vertices_flag,sizeof(int)*N,cudaMemcpyHostToDevice) );
+
 
 }
 
+
+template <class T,class U>
+void GPU_D_A_Star<T,U>:: extract_min()
+{
+    //K parallel
+    int N = this->graph->get_graph().get_num_nodes();
+    int num_blocks = (num_pq+num_threads-1)/num_threads;
+
+    extractMin < U > <<< num_blocks,num_threads >>>( d_PQ, d_PQ_size, d_expand_nodes, d_expand_nodes_size, d_Cx, d_open_list, N, num_pq);
+        
+    gpuErrchk(cudaPeekAtLastError() );
+
+    cudaDeviceSynchronize();
+
+}
+
+
+template <class T,class U>
+void GPU_D_A_Star<T,U>:: expand()
+{
+    int N = this->graph->get_graph().get_num_nodes();
+    int E = this->graph->get_graph().get_num_edges();
+    int num_blocks = (num_pq+num_threads-1)/num_threads;
+
+    A_star_expand<<<numBlocks,numThreads>>>(
+        this->graph->get_graph().get_offsets(), this->graph->get_graph().get_edges(), this->graph.get_graph().get_weights(),
+        d_hx, d_parent, d_Cx,
+        d_expand_nodes,d_expand_nodes_size,
+        d_lock ,d_flag_found,d_open_list,d_next_vertices_flag,
+        N, E, num_pq, endNode,
+        false,0,
+        this->graph->get_diff_graph().get_offsets(),this->graph->get_diff_graph().get_edges(),this->graph.get_diff_graph().get_weights()
+    );
+}
 
 
 

@@ -38,6 +38,8 @@ class GPU_D_A_Star
         int* next_vertices;
         int next_vertices_size;
 
+        //config params
+        int num_threads;
 
         //device pointers
         U* d_Hx;
@@ -64,6 +66,7 @@ class GPU_D_A_Star
 
         void __alloc_cpu();
         void __alloc_gpu();
+        void __copy_to_gpu();
 
         void extract_min();
         void expand();
@@ -71,6 +74,8 @@ class GPU_D_A_Star
 
         void maintain_heap();
         void set_flags();
+
+        bool is_empty_pq();
     
     public:
         

@@ -218,7 +218,7 @@ std::vector<int>  GPU_A_Star< T, U>:: get_path()
 
         
         A_star_expand < T, U > <<<numBlocks,numThreads>>> (
-            this->graph->get_graph().get_offsets(),this->graph->get_graph().get_edges(),this->graph->get_graph().get_weight(),
+            this->graph->get_graph().get_offsets(),this->graph->get_graph().get_edges(),this->graph->get_graph().get_weights(),
             d_Hx,d_parent,d_Cx,
             d_expand_nodes,d_expand_nodes_size, d_lock ,d_flag_found,d_open_list,
             N,E,K,this->end_node,d_next_vertices_flag 

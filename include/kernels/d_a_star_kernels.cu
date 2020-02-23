@@ -1,11 +1,11 @@
 #ifdef __NVCC__
 
-__device__ volatile int PQ[MAX_NODE];
+// __device__ volatile int PQ[MAX_NODE];
 
 
 //K in parallel
 template <class U>
-__global__ void extractMin(int* PQ_size, int* expandNodes,int* expandNodes_size,U* Cx,int* openList,int N,int K){
+__global__ void extractMin(unsigned int* PQ, unsigned int* PQ_size, int* expandNodes,int* expandNodes_size,U* Cx,int* openList,int N,int K){
     
     int id = blockIdx.x*blockDim.x+threadIdx.x;
     
@@ -65,9 +65,10 @@ __global__ void extractMin(int* PQ_size, int* expandNodes,int* expandNodes_size,
 //for K in parallel
 template <class T,class U>
 __global__ void A_star_expand(int* off,int* edge,unsigned T* W,U* Hx,int* parent,volatile U* Cx,
-    int* expandNodes,int* expandNodes_size, int* lock ,int* flagfound,int* openList,
-    int N,int E, int K,int dest,int* nVFlag,int* PQ_size,
-    int flagDiff,int* diff_off,int* diff_edge,unsigned int* diff_weight,int dE ){
+    int* expandNodes,int* expandNodes_size, int* lock ,int* flagfound,int* openList,int* nVFlag,
+    int N,int E, int K,int dest,
+    int flagDiff,int dE,
+    int* diff_off,int* diff_edge,unsigned int* diff_weight ){
        
     int id = blockIdx.x*blockDim.x+threadIdx.x;
     

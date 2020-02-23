@@ -78,7 +78,7 @@ template< class T >
 int* GPU_Graph<T>:: get_edges(){ return this->d_edges; }
 
 template< class T >
-T* GPU_Graph<T>:: get_weight(){ return this->d_weights; }
+T* GPU_Graph<T>:: get_weights(){ return this->d_weights; }
 
 
 template< class T >
