@@ -28,7 +28,7 @@ class GPU_Graph : public Graph<T>
 
         int* get_offsets();
         int* get_edges();
-        T* get_weight();
+        T* get_weights();
 
 };
 

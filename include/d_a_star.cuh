@@ -11,7 +11,7 @@ class GPU_D_A_Star
 {
     private:
 
-        int num_updated_paths;
+        int num_updates;
 
         GPU_Dynamic_Graph<T> *graph;
         GPU_Dynamic_Graph<T> rev_graph;
@@ -75,7 +75,14 @@ class GPU_D_A_Star
         void maintain_heap();
         void set_flags();
 
-        bool is_empty_pq();
+        void check_all_min_pq();
+
+        bool is_empty_pq_cpu();
+
+        std::vector<int> initial_path();
+        std::vector<int> updated_path();
+
+        FILE* update_file;
     
     public:
         
@@ -83,7 +90,9 @@ class GPU_D_A_Star
 
         void set_heuristics(U* hx);
 
-        std::vector<int> get_path();
+        std::vector<int> get_path();            //alloc gpu here
+
+        void set_update_file(FILE* fptr);
 
         void free_gpu();
 

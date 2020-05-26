@@ -6,8 +6,8 @@
 
 #include "graph.cuh"
 
-template < class T = unsigned int>
-class GPU_Diff_Graph : GPU_Graph<T>
+template < class T >
+class GPU_Diff_Graph : public GPU_Graph<T>
 {
     private:
         int id;

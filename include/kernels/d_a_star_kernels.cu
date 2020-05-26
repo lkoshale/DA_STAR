@@ -64,7 +64,7 @@ __global__ void extractMin(unsigned int* PQ, unsigned int* PQ_size, int* expandN
 
 //for K in parallel
 template <class T,class U>
-__global__ void A_star_expand(int* off,int* edge,unsigned T* W,U* Hx,int* parent,volatile U* Cx,
+__global__ void A_star_expand(int* off,int* edge, T* W,U* Hx,int* parent,volatile U* Cx,
     int* expandNodes,int* expandNodes_size, int* lock ,int* flagfound,int* openList,int* nVFlag,
     int N,int E, int K,int dest,
     int flagDiff,int dE,
@@ -190,7 +190,7 @@ __global__ void A_star_expand(int* off,int* edge,unsigned T* W,U* Hx,int* parent
 
 //K in parallel -- O(N)
 template <class U>
-__global__ void keepHeapPQ(int* PQ_size,U* Cx,int N,int K){
+__global__ void keepHeapPQ(unsigned int* PQ,unsigned int* PQ_size,U* Cx,int N,int K){
     int id = blockIdx.x*blockDim.x+threadIdx.x;
     if(id < K && PQ_size[id] > 0){
         int front  = id*( (N+K-1)/K );
@@ -253,7 +253,7 @@ __global__ void setNV(int* nextFlag,int* nextV,int* nvSize,int N){
 
 //for K in parallel
 template <class U>
-__global__ void insertPQ(int* PQS,int* nextV,int* nVsize,U* Cx,int K,int N,int* openList){
+__global__ void insertPQ(unsigned int* PQ,unsigned int* PQS,int* nextV,int* nVsize,U* Cx,int K,int N,int* openList){
     int id = blockIdx.x*blockDim.x+threadIdx.x;
     if(id < K){
 
@@ -294,7 +294,7 @@ __global__ void insertPQ(int* PQS,int* nextV,int* nVsize,U* Cx,int K,int N,int* 
 
 //for K in parallel
 template <class U>
-__global__ void checkMIN(int* PQ_size,int* flagEnd,U* Cx,int dest,int N,int K){
+__global__ void checkMIN(unsigned int* PQ, unsigned int* PQ_size,int* flagEnd,U* Cx,int dest,int N,int K){
     int id = blockIdx.x*blockDim.x+threadIdx.x;
     
     if(id < K && PQ_size[id] > 0 ){
@@ -839,7 +839,7 @@ __global__ void delete_propagate(int* nodes, int* size, int* off, int* edge,T* W
 
 //do in 1 thread
 template <class U>
-__global__ void insertDest(int* PQ_size,U* Cx,int dest,int* openList){
+__global__ void insertDest(unsigned int* PQ,unsigned int* PQ_size,U* Cx,int dest,int* openList){
     int id = 0;
     int front = 0;
     if(openList[dest]==-1){
