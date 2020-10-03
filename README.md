@@ -15,11 +15,11 @@ for 100 updates we got 25x-40x of performance improvement over repeated A* searc
 
 
 ## Features
-- Supports both directed and undirected positively weighted graphs 
-- Supports all types of heuristics function 
-- Supports insertions/deletions of edges onto the graph
-- Uses Diff CSR to store dynamic graphs
-- improved performance from repeated A* search
+- Supports both directed and undirected positively weighted graphs. 
+- Supports all types of heuristics function. 
+- Supports insertions/deletions of edges onto the graph.
+- Uses Diff CSR to store dynamic graphs.
+- improved performance from repeated A* search.
 
 ## System Requirements
 
@@ -37,7 +37,7 @@ This library is self-contained in the header files at the [include](https://gith
 - You can copy the headers of this library to your projects include directory :
     - ```cp -r DA_STAR/include/   <your-project>/include/```
 
-- Or You can copy the headers of this library to your root/CUDA include folder
+- Or You can copy the headers of this library to your root/CUDA include folder :
 
     - ```sudo cp -r DA_STAR/include/   /usr/include/```
     - ```cp -r DA_STAR/include/     <CUDA_PATH>/include/```
